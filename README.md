@@ -1,6 +1,6 @@
 # ROSA with AWS EFS CSI Driver
 
-This installation method uses Helm to install the AWS EF CSI Driver on ROSA using a least privileged operational via integration with AWS STS.
+These instructions uses Helm to install the AWS EF CSI Driver on ROSA using least privileged operation via integration with AWS STS.
 
 ROSA can be deployed as either a public or private cluster in STS mode as per these instructions:
 
