@@ -154,3 +154,4 @@ Note that the operating system identity associated with the path is auto-generat
 	drwxr-xr-x.  52 root  root  4096 Dec  4  2020 etc
 	drwxr-xr-x.   2 root  root     6 Nov  3  2020 home
 
+Finally note that the operating system identity for each access point created will increment by 1, i.e., if another PVC is created the auto-generated path will by owned by 50001:50001.
