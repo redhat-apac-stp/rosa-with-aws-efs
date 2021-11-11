@@ -114,7 +114,8 @@ Under the file system network options select manage and bind the file system to 
 Under the file system general section configure backups and lifecycle management in line with your corporate standards and select a preferred performance mode.
 
 Create a storage class for EFS to support dynamic provisioning operations.
-	
+
+	apiVersion: v1
 	kind: StorageClass
 	metadata:
 	  name: efs-sc
