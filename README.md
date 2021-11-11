@@ -66,5 +66,26 @@ Attach this policy to a role (e.g., aws-efs-csi-driver-irsa) in IAM and setup a 
 	  ]
 	}
 	
-You can obtain the OIDC endpoint using the rosa describe cluster command.
+You can obtain the OIDC endpoint using the rosa describe cluster -c <cluster name> command.
+
+Create the following service account in the kube-system namespace.
+	
+	apiVersion: v1
+	kind: ServiceAccount
+	metadata:
+  	  name: efs-csi-controller-sa
+  	  namespace: kube-system
+  	  labels:
+    	    app.kubernetes.io/name: aws-efs-csi-driver
+  	  annotations:
+    	    eks.amazonaws.com/role-arn: arn:aws:iam::<AWS account>:role/aws-efs-csi-driver-irsa
+
+The following instructions assume that Helm has been installed.
+	
+	helm repo add aws-efs-csi-driver https://kubernetes-sigs.github.io/aws-efs-csi-driver/
+	helm repo update
+	helm upgrade -i aws-efs-csi-driver aws-efs-csi-driver/aws-efs-csi-driver \
+	--namespace kube-system \
+	--set controller.serviceAccount.create=false \
+	--set controller.serviceAccount.name=efs-csi-controller-sa
 
