@@ -115,17 +115,18 @@ Under the file system general section configure backups and lifecycle management
 
 Create a storage class for EFS to support dynamic provisioning operations.
 	
-	apiVersion: storage.k8s.io/v1
+	kind: StorageClass
 	metadata:
 	  name: efs-sc
-	provisioner: efs.csi.aws.com
 	mountOptions:
-	  - tls
+	- tls
 	parameters:
-	  provisioningMode: efs-ap
-	  fileSystemId: <file system ID>
 	  directoryPerms: "700"
+	  fileSystemId: <your file system ID>
+	  provisioningMode: efs-ap
+	provisioner: efs.csi.aws.com
 	reclaimPolicy: Retain
+	volumeBindingMode: Immediate
 
 Validate dynamic creation of a persistent volume and corresponding access point in EFS by submitting a persistent volume claim request.
 	
