@@ -125,6 +125,7 @@ Create a storage class for EFS to support dynamic provisioning operations.
 	  provisioningMode: efs-ap
 	  fileSystemId: <file system ID>
 	  directoryPerms: "700"
+	reclaimPolicy: Retain
 
 Validate dynamic creation of a persistent volume and corresponding access point in EFS by submitting a persistent volume claim request.
 	
