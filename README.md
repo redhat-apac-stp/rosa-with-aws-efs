@@ -6,7 +6,7 @@ ROSA can be deployed as either a public or private cluster in STS mode as per th
 
 https://mobb.ninja/docs/rosa/sts/
 
-Do not install the AWS EFS Operator from Operator Hub as it does not support integration with STS as at the time of this writing.
+Do not install the AWS EFS Operator from Operator Hub as it does not support integration with STS as at the time of this writing. Also do not use Velero/Restic to backup a dynamically provisioned EFS volume as there is a known issue (https://github.com/vmware-tanzu/velero/issues/2958) that prevents restoration. Use AWS Backup which is already integrated with EFS instead.
 
 Create the following policy (e.g., aws-efs-csi-driver-policy) in IAM to allow dynamic provisioning of EFS access points by the EFS CSI driver.
 
