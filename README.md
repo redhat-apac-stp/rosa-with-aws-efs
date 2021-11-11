@@ -89,3 +89,27 @@ The following instructions assume that Helm has been installed.
 	--set controller.serviceAccount.create=false \
 	--set controller.serviceAccount.name=efs-csi-controller-sa
 
+Verify the controller and driver is present on each cluster node.
+	
+	oc get pod -n kube-system -o wide
+	
+	NAME                                  READY   STATUS    RESTARTS   AGE   IP             NODE                                              NOMINATED NODE   READINESS GATES
+	efs-csi-controller-6fcd876856-68fbd   3/3     Running   0          19h   10.0.192.73    ip-10-0-192-73.ap-southeast-1.compute.internal    <none>           <none>
+	efs-csi-controller-6fcd876856-lpmhv   3/3     Running   0          19h   10.0.140.2     ip-10-0-140-2.ap-southeast-1.compute.internal     <none>           <none>
+	efs-csi-node-82tb6                    3/3     Running   0          19h   10.0.190.108   ip-10-0-190-108.ap-southeast-1.compute.internal   <none>           <none>
+	efs-csi-node-8vzwz                    3/3     Running   0          19h   10.0.192.73    ip-10-0-192-73.ap-southeast-1.compute.internal    <none>           <none>
+	efs-csi-node-9c2sq                    3/3     Running   0          19h   10.0.166.112   ip-10-0-166-112.ap-southeast-1.compute.internal   <none>           <none>
+	efs-csi-node-c4mb9                    3/3     Running   0          19h   10.0.140.2     ip-10-0-140-2.ap-southeast-1.compute.internal     <none>           <none>
+	efs-csi-node-c89tp                    3/3     Running   0          19h   10.0.224.152   ip-10-0-224-152.ap-southeast-1.compute.internal   <none>           <none>
+	efs-csi-node-mhqrp                    3/3     Running   0          19h   10.0.159.82    ip-10-0-159-82.ap-southeast-1.compute.internal    <none>           <none>
+	efs-csi-node-xw8rx                    3/3     Running   0          19h   10.0.175.60    ip-10-0-175-60.ap-southeast-1.compute.internal    <none>           <none>
+	
+
+From the AWS console select the EFS service and create a new file system that is associated with the ROSA VPC. Choose either multi-AZ or single-AZ redundancy in alignment with your deployment model for ROSA.
+	
+Create a security group for the file system which allows all outbound traffic and inbound NFS traffic on TPC port 2049 from within the VPC only (or any other external sources that may require access depending on your needs).
+
+Select the file system and under the network tab choose manage and bind the file system to the security group. Ensure that there is one mount target per AZ and that it maps to the subnet in which the ROSA nodes are deployed.
+	
+
+	
