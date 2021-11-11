@@ -142,9 +142,6 @@ Validate dynamic creation of a persistent volume and corresponding access point 
 
 It should look something like this inside AWS console. Note that the path for the access point should match the name of the persistent volume that was created by the claim.
 
-
+https://github.com/redhat-apac-stp/rosa-with-aws-efs/blob/main/AWS-EFS-AP.png
 	
-
-	
-
-	
+Note that the operating system identity associated with the path is auto-generated when the access point is provisioned. When mounting this access point inside a pod the user:group of the mountpoint will match this numberic value irrespective of any pod-level securitycontext settings. This is by design and ensures the identity of the access path is consistent across different NFS clients. This should not impact the ability of the container to read/write from the mountpoint even if it runs as a non-root user that has a different numeric value.
