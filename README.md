@@ -147,7 +147,7 @@ https://github.com/redhat-apac-stp/rosa-with-aws-efs/blob/main/AWS-EFS-AP.png
 Note that the operating system identity associated with the path is auto-generated when the access point is provisioned. When mounting this access point inside a pod the user:group of the mountpoint will match this numberic value irrespective of any pod-level securitycontext settings as per the listing below. This is by design and ensures the identity of the access path is consistent across different NFS clients. This should not impact the ability of the container to read/write from the mountpoint even if it runs as a non-root user that has a different numeric value.
 
 	$ oc exec efs-app -- bash -c "id; mount -t nfs4; touch data/test; ls -l data"
-	uid=1234(1234) gid=1234 groups=1234,4321
+	uid=1234(1234) gid=1234 groups=1234
 	127.0.0.1:/ on /data type nfs4 (rw,relatime,vers=4.1,rsize=1048576,wsize=1048576,namlen=255,hard,noresvport,proto=tcp,port=20155,timeo=600,retrans=2,sec=sys,clientaddr=127.0.0.1,local_lock=none,addr=127.0.0.1)
 	total 28
 	-rw-r--r--. 1 50000 50000     0 Nov 11 01:56 test
