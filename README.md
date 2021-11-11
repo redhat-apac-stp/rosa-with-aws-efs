@@ -105,11 +105,17 @@ Verify the controller and driver is present on each cluster node.
 	efs-csi-node-xw8rx                    3/3     Running   0          19h   10.0.175.60    ip-10-0-175-60.ap-southeast-1.compute.internal    <none>           <none>
 	
 
-From the AWS console select the EFS service and create a new file system that is associated with the ROSA VPC. Choose either multi-AZ or single-AZ redundancy in alignment with your deployment model for ROSA.
+From the AWS console select the EFS service and select create a new file system and associate it with the ROSA VPC. Choose either multi-AZ or single-AZ redundancy in alignment with your deployment model for ROSA.
 	
 Create a security group for the file system which allows all outbound traffic and inbound NFS traffic on TPC port 2049 from within the VPC only (or any other external sources that may require access depending on your needs).
 
-Select the file system and under the network tab choose manage and bind the file system to the security group. Ensure that there is one mount target per AZ and that it maps to the subnet in which the ROSA nodes are deployed.
+Under the file system network tab select manage and bind the file system to the security group. Ensure that there is one mount target per AZ and that it maps to the subnet in which the ROSA nodes are deployed.
+	
+Under the file system general section configure backups and lifecycle management in line with your corporate standards and select a preferred performance mode.
+
+
+	
+
 	
 
 	
