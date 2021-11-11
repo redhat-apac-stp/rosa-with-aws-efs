@@ -109,9 +109,38 @@ From the AWS console select the EFS service and select create a new file system 
 	
 Create a security group for the file system which allows all outbound traffic and inbound NFS traffic on TPC port 2049 from within the VPC only (or any other external sources that may require access depending on your needs).
 
-Under the file system network tab select manage and bind the file system to the security group. Ensure that there is one mount target per AZ and that it maps to the subnet in which the ROSA nodes are deployed.
+Under the file system network options select manage and bind the file system to the security group. Ensure that there is one mount target per AZ and that it maps to the subnet in which the ROSA nodes are deployed.
 	
 Under the file system general section configure backups and lifecycle management in line with your corporate standards and select a preferred performance mode.
+
+Create a storage class for EFS to support dynamic provisioning operations.
+	
+	apiVersion: storage.k8s.io/v1
+	metadata:
+	  name: efs-sc
+	provisioner: efs.csi.aws.com
+	mountOptions:
+	  - tls
+	parameters:
+	  provisioningMode: efs-ap
+	  fileSystemId: <file system ID>
+	  directoryPerms: "700"
+
+Validate dynamic creation of a persistent volume and corresponding access point in EFS by submitting a persistent volume claim request.
+	
+	apiVersion: v1
+	kind: PersistentVolumeClaim
+	metadata:
+	  name: efs-claim
+	spec:
+	  accessModes:
+	    - ReadWriteMany
+	  storageClassName: efs-sc
+	  resources:
+	    requests:
+	      storage: 5Gi
+
+It should look something like this inside AWS console. Note that the path for the access point should match the name of the persistent volume that was created by the claim.
 
 
 	
