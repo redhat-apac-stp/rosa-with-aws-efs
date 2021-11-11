@@ -152,4 +152,4 @@ Note that the operating system identity associated with the path is auto-generat
 	total 28
 	-rw-r--r--. 1 50000 50000     0 Nov 11 01:56 test
 
-Finally note that the operating system identity is incremented by one (1) for each access point created. e.g., if another PVC is created the auto-generated path will by owned by 50001:50001.
+Finally note that the operating system identity is incremented by one (1) for each access point created. e.g., if another PVC is created the auto-generated path for the new access point will by owned by 50001:50001.
