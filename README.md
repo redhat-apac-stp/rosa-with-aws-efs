@@ -146,12 +146,10 @@ https://github.com/redhat-apac-stp/rosa-with-aws-efs/blob/main/AWS-EFS-AP.png
 	
 Note that the operating system identity associated with the path is auto-generated when the access point is provisioned. When mounting this access point inside a pod the user:group of the mountpoint will match this numberic value irrespective of any pod-level securitycontext settings as per the listing below. This is by design and ensures the identity of the access path is consistent across different NFS clients. This should not impact the ability of the container to read/write from the mountpoint even if it runs as a non-root user that has a different numeric value.
 
-	$ oc exec efs-app -- bash -c "ls -l /"
-	total 12
-	lrwxrwxrwx.   1 root  root     7 Nov  3  2020 bin -> usr/bin
-	drwx------.   2 50000 50000 6144 Nov 11 00:56 data
-	drwxr-xr-x.   5 root  root   360 Nov 11 00:56 dev
-	drwxr-xr-x.  52 root  root  4096 Dec  4  2020 etc
-	drwxr-xr-x.   2 root  root     6 Nov  3  2020 home
+	$ oc exec efs-app -- bash -c "id; mount -t nfs4; touch data/test; ls -l data"
+	uid=1234(1234) gid=1234 groups=1234,4321
+	127.0.0.1:/ on /data type nfs4 (rw,relatime,vers=4.1,rsize=1048576,wsize=1048576,namlen=255,hard,noresvport,proto=tcp,port=20155,timeo=600,retrans=2,sec=sys,clientaddr=127.0.0.1,local_lock=none,addr=127.0.0.1)
+	total 28
+	-rw-r--r--. 1 50000 50000     0 Nov 11 01:56 test
 
-Finally note that the operating system identity for each access point is unique. e.g., if another PVC is created the auto-generated path will by owned by 50001:50001.
+Finally note that the operating system identity is incremented by one (1) for each access point created. e.g., if another PVC is created the auto-generated path will by owned by 50001:50001.
