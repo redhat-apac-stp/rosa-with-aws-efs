@@ -144,4 +144,13 @@ It should look something like this inside AWS console. Note that the path for th
 
 https://github.com/redhat-apac-stp/rosa-with-aws-efs/blob/main/AWS-EFS-AP.png
 	
-Note that the operating system identity associated with the path is auto-generated when the access point is provisioned. When mounting this access point inside a pod the user:group of the mountpoint will match this numberic value irrespective of any pod-level securitycontext settings. This is by design and ensures the identity of the access path is consistent across different NFS clients. This should not impact the ability of the container to read/write from the mountpoint even if it runs as a non-root user that has a different numeric value.
+Note that the operating system identity associated with the path is auto-generated when the access point is provisioned. When mounting this access point inside a pod the user:group of the mountpoint will match this numberic value irrespective of any pod-level securitycontext settings as per the listing below. This is by design and ensures the identity of the access path is consistent across different NFS clients. This should not impact the ability of the container to read/write from the mountpoint even if it runs as a non-root user that has a different numeric value.
+
+	$ oc exec efs-app -- bash -c "ls -l /"
+	total 12
+	lrwxrwxrwx.   1 root  root     7 Nov  3  2020 bin -> usr/bin
+	drwx------.   2 50000 50000 6144 Nov 11 00:56 data
+	drwxr-xr-x.   5 root  root   360 Nov 11 00:56 dev
+	drwxr-xr-x.  52 root  root  4096 Dec  4  2020 etc
+	drwxr-xr-x.   2 root  root     6 Nov  3  2020 home
+
