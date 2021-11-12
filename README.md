@@ -80,7 +80,7 @@ Create the following service account in the kube-system namespace.
   	  annotations:
     	    eks.amazonaws.com/role-arn: arn:aws:iam::<AWS account>:role/aws-efs-csi-driver-irsa
 
-The following instructions assume that Helm has been installed.
+The following instructions assume that Helm has been installed locally.
 	
 	helm repo add aws-efs-csi-driver https://kubernetes-sigs.github.io/aws-efs-csi-driver/
 	helm repo update
