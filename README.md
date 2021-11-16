@@ -115,7 +115,7 @@ Under the file system general section configure backups and lifecycle management
 
 Create a storage class for EFS to support dynamic provisioning operations.
 
-	apiVersion: v1
+	apiVersion: storage.k8s.io/v1
 	kind: StorageClass
 	metadata:
 	  name: efs-sc
